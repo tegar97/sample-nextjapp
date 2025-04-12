@@ -47,7 +47,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            ini hasil push
+            ini hasil push kedua 
           </a>
         </div>
       </main>
