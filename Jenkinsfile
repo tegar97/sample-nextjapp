@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'nextjs-app'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
         CONTAINER_NAME = 'nextjs-app-container'
-        DOCKER_REGISTRY = 'your-registry-url' // Update with your Docker registry URL
+        DOCKER_REGISTRY = 'floxyy' // Update with your Docker registry URL
     }
     
     stages {
@@ -26,7 +26,7 @@ pipeline {
         
         stage('Push Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_CREDENTIALS')]) {
+                withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'DOCKER_CREDENTIALS')]) {
                     sh "echo ${DOCKER_CREDENTIALS} | docker login ${DOCKER_REGISTRY} -u username --password-stdin"
                     sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}"
                     sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest"
@@ -39,7 +39,6 @@ pipeline {
                 branch 'main'
             }
             steps {
-                // Stop and remove existing container
                 sh "docker stop ${CONTAINER_NAME} || true"
                 sh "docker rm ${CONTAINER_NAME} || true"
                 
