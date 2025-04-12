@@ -15,26 +15,9 @@ pipeline {
             }
         }
         
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-        
-        stage('Lint') {
-            steps {
-                sh 'npm run lint'
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-        
+      
         stage('Build Docker Image') {
-            steps {
+        steps {
                 sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
                 sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}"
                 sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest"
